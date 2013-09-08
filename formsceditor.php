@@ -125,7 +125,7 @@ class XoopsFormSceditor extends XoopsEditor
         $isJsLoaded = true;
       }
       
-      if(!_XOOPS_EDITOR_SCEDITOR_DIRECTION == "ltr"){
+      if(_XOOPS_EDITOR_SCEDITOR_DIRECTION == "ltr"){
         $rtl = "false";
         $toolbar = "bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste,pastetext|bulletlist,orderedlist|table|code,quote|horizontalrule,image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|print,maximize,source";
       }else{
