@@ -1,0 +1,56 @@
+/** Youtube
+C:\wamp\www\xo256\class\textsanitizer\youtube\youtube.php
+*/
+
+    function load(&$ts)
+    {
+        $ts->patterns[] = "/\[youtube([^\"]*)\]([^\"]*)\[\/youtube\]/esU";
+        $ts->replacements[] = __CLASS__ . "::decode( '\\2' )";
+    }
+
+    function decode($url)
+    {        
+    
+        if (preg_match("/^http:\/\/(www\.)?youtube\.com\/watch\?v=(.*)/i", $url, $matches)) {
+            $src = "//www.youtube.com/v/" . $matches[2];
+        }else{
+            $src = "//www.youtube.com/v/" . $url; 
+        }
+
+        $code = "<object width='420' height='315'>";
+        $code.= "<param name='movie' value='{$src}?version=3'></param>";
+        $code.= "<param name='allowFullScreen' value='true'></param>";
+        $code.= "<param name='allowscriptaccess' value='always'></param>";
+        $code.= "<embed src='{$src}?version=3'";
+        $code.= "type='application/x-shockwave-flash'";
+        $code.= "width='420'";
+        $code.= "height='315'";
+        $code.= "allowscriptaccess='always'";
+        $code.= "allowfullscreen='true'>";
+        $code.= "</embed>";
+        $code.= "</object>";
+        
+        return $code;
+    }
+    
+/** BBCode
+C:\wamp\www\xo256\class\module.textsanitizer.php
+> comment
+$patterns[] = "/\[size=(['\"]?)([a-z0-9-]*)\\1](.*)\[\/size\]/sU";
+$replacements[] = '<span style="font-size: \\2;">\\3</span>';
+> add
+// sceditor
+$patterns[] = "/\[color=#(['\"]?)([a-zA-Z0-9]*)\\1](.*)\[\/color\]/sU";
+$replacements[] = '<span style="color: #\\2;">\\3</span>';
+$patterns[] = "/\[size=(['\"]?)([a-z-]*)\\1](.*)\[\/size\]/sU";
+$replacements[] = '<span style="font-size: \\2;">\\3</span>';
+$patterns[] = "/\[size=(['\"]?)([0-9]*)\\1](.*)\[\/size\]/sU";
+$replacements[] = '<font size="\\2">\\3</font>';
+$patterns[] = "/\[justify](.*)\[\/justify\]/sU";
+$replacements[] = '<div style="text-align: justify;">\\1</div>';
+$patterns[] = "/\[s](.*)\[\/s\]/sU";
+$replacements[] = '<del>\\1</del>';
+$patterns[] = "/\[sub](.*)\[\/sub\]/sU";
+$replacements[] = '<sub>\\1</sub>';
+$patterns[] = "/\[sup](.*)\[\/sup\]/sU";
+$replacements[] = '<sup>\\1</sup>';
